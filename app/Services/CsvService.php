@@ -23,6 +23,9 @@ class CsvService
      */
     public function createCsvData($data)
     {
+        foreach ($data as $key => $val) {
+            $data[$key]['password'] = password_hash($val['password'], PASSWORD_BCRYPT);
+        }
         return $this->user->createUsers($data);
     }
 
@@ -34,6 +37,12 @@ class CsvService
      */
     public function updateCsvData($id, $data)
     {
+        if (!empty($data['password'])) {
+            $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        } else {
+            // パスワードの入力が空の場合は更新対象から外す
+            unset($data['password']);
+        }
         return $this->user->updateUser($id, $data);
     }
 
@@ -92,23 +101,32 @@ class CsvService
                 continue;
             }
 
-            // Validatorで補えないバリデーション
+            // Validatorのみだと補えないバリデーション
             switch ($line[config('const.CSV_HEADER_NUM.TYPE.INDEX')]) {
+                case config('const.CSV_TYPE.REGISTER'):
+                    // 登録の場合はパスワードの入力が必須なのでここで補完
+                    if ('' === $line[config('const.CSV_HEADER_NUM.PASSWORD.INDEX')]) {
+                        $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' '.config('const.CSV_HEADER_NUM.PASSWORD.NAME').'は必須です']);
+                    } elseif (!preg_match('/^[0-9a-zA-Z]+$/', $line[config('const.CSV_HEADER_NUM.PASSWORD.INDEX')])) {
+                        $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' '.config('const.CSV_HEADER_NUM.PASSWORD.NAME').'は半角英数字で入力してください']);
+                    } elseif (8 > mb_strlen($line[config('const.CSV_HEADER_NUM.PASSWORD.INDEX')]) || 16 < mb_strlen($line[config('const.CSV_HEADER_NUM.PASSWORD.INDEX')])) {
+                        $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' '.config('const.CSV_HEADER_NUM.PASSWORD.NAME').'は8～16文字以内で入力してください']);
+                    }
+                    break;
                 case config('const.CSV_TYPE.EDIT'):
                 case config('const.CSV_TYPE.DELETE'):
                     // 編集・削除の場合はID存在チェック
                     if (!$this->user::where('id', $line[config('const.CSV_HEADER_NUM.ID.INDEX')])->exists()) {
-                        $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' IDが存在しません']);
+                        $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' '.config('const.CSV_HEADER_NUM.ID.NAME').'のユーザーが存在しません']);
                     }
                     break;
             }
-
             // CSV内でIDが重複していないかチェック
             if ($line[config('const.CSV_HEADER_NUM.ID.INDEX')]) {
                 if (!isset($csv_id_list[$line[config('const.CSV_HEADER_NUM.ID.INDEX')]])) {
                     $csv_id_list[$line[config('const.CSV_HEADER_NUM.ID.INDEX')]] = $line[config('const.CSV_HEADER_NUM.ID.INDEX')];
                 } else {
-                    $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' IDがCSV内で重複しています']);
+                    $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' '.config('const.CSV_HEADER_NUM.ID.NAME').'がCSV内で重複しています']);
                 }
             }
         }
