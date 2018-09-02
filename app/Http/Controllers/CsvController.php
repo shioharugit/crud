@@ -72,6 +72,6 @@ class CsvController extends Controller
             }
         }
 
-        return redirect()->route('csv.index');
+        return redirect()->route('user');
     }
 }
