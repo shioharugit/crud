@@ -17,6 +17,42 @@ class CsvService
     }
 
     /**
+     * CSV全件出力用のuser一覧を取得
+     */
+    public function getCsvAllUserList()
+    {
+        // CSVのヘッダー作成
+        $header = [];
+        foreach (config('const.CSV_HEADER_NUM') as $val) {
+            $header[] = $val['NAME'];
+        }
+
+        // DBセレクトが必要なカラム配列を作成
+        $select_values = $header;
+        unset($select_values[config('const.CSV_HEADER_NUM.TYPE.INDEX')]);
+
+        // DBからCSVへ出力する配列取得
+        $data = $this->user->select($select_values)->get()->toArray();
+
+        // CSV出力形式へ整形
+        $csv[0] = $header;
+        foreach ($data as $key => $val) {
+            foreach ($header as $header_val) {
+                if (config('const.CSV_HEADER_NUM.TYPE.NAME') === $header_val || config('const.CSV_HEADER_NUM.PASSWORD.NAME') === $header_val) {
+                    // CSVのtypeはDBには存在しないので空文字で出力
+                    // CSVにパスワードを表示させないため空文字で出力
+                    $csv[$key + 1][$header_val] = '""';
+                } else {
+                    // 他の項目はDBの値を""で囲って出力
+                    $csv[$key + 1][$header_val] = '"'.$val[$header_val].'"';
+                }
+            }
+        }
+
+        return $csv;
+    }
+
+    /**
      * CSV登録処理
      *
      * @param $data
@@ -75,8 +111,10 @@ class CsvService
         // CSVファイルがヘッダー行を除いて最大行以上の場合はエラー
         $file->seek($file->getSize());
         $total = $file->key() - 1;
-        if (config('const.CSV_IMPORT_MAX_LINE') < $total) {
-            return [\Lang::get('csv_import_validation.csv_import_max_line')];
+        if (1 > $total) {
+            return ['CSVに値を入力してください'];
+        } elseif (config('const.CSV_IMPORT_MAX_LINE') < $total) {
+            return ['CSVの最大件数は'.config('const.CSV_IMPORT_MAX_LINE').'までです'];
         }
 
         // バリデーションルール生成

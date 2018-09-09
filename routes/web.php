@@ -24,5 +24,11 @@ Route::prefix('csv')->name('csv.')->group(function () {
         });
         Route::post('', 'CsvController@import');
     });
+    Route::prefix('download')->name('download')->group(function () {
+        Route::get('', function () {
+            return redirect()->route('csv.index');
+        });
+        Route::post('', 'CsvController@download');
+    });
 });
 

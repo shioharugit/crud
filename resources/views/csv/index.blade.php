@@ -8,6 +8,14 @@
 @endsection
 
 @section('content')
+<form method="POST" action="{{ route('csv.download') }}">
+    @csrf
+    <label>
+        <div>
+            <button type="submit">Download</button>
+        </div>
+    </label>
+</form>
 <form method="POST" action="{{ route('csv.import') }}" enctype="multipart/form-data">
     @csrf
     <label>
