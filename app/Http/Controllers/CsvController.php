@@ -30,7 +30,7 @@ class CsvController extends Controller
      */
     public function download()
     {
-        $path = env('DOCUMENT_ROOT').'/crud/storage/app/';
+        $path = env('DOCUMENT_ROOT').'/crud/storage/app/csv/';
         $filename = 'user_'.date('YmdHis').'.csv';
 
         if (touch($path.$filename)) {
@@ -48,7 +48,7 @@ class CsvController extends Controller
             return redirect()->route('csv.index')->withInput(['csv_errors' => ['CSVの生成に失敗しました。']]);
         }
 
-        return Response::download($path.$filename, $filename, ['Content-Type' => 'text/csv']);
+        return Response::download($path.$filename, $filename, ['Content-Type' => 'text/csv'])->deleteFileAfterSend(true);
     }
 
     /**
@@ -78,6 +78,10 @@ class CsvController extends Controller
 
         // 登録、編集、削除ごとに配列整形
         $records = $this->csv->makeCsvRecords($file);
+
+        // 配列整形後は不要なのでファイル削除
+        $file = null;
+        unlink($path);
 
         // 登録
         if (isset($records[config('const.CSV_TYPE.REGISTER')])) {
