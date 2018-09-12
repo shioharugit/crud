@@ -73,6 +73,8 @@ class CsvController extends Controller
         // CSVの中身に対するバリデーションを実施
         $csv_errors = $this->csv->validateCsvData($file);
         if (count($csv_errors) >= 1) {
+            $file = null;
+            unlink($path);
             return redirect()->route('csv.index')->withInput(['csv_errors' => $csv_errors]);
         }
 
