@@ -9,8 +9,8 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('user') }}">List</a>
-                    {{-- <a class="dropdown-item disabled" href="#">Register</a> --}}
+                    <a class="dropdown-item" href="{{ route('user.list') }}">List</a>
+                    <a class="dropdown-item" href="{{ route('user.register.index') }}">Register</a>
                 </div>
             </li>
             <li class="nav-item">

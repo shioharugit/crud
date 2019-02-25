@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="page-header">
-        <h1><small>User</small></h1>
+        <h1><small>User-List</small></h1>
     </div>
     <table class="table table-striped table-hover">
         <thead>

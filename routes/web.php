@@ -12,9 +12,24 @@
 */
 
 Route::get('/', function () {
-    return redirect()->route('user');
+    return redirect()->route('user.list');
 });
-Route::get('user', 'UserController@index')->name('user');
+
+Route::prefix('user')->name('user.')->group(function () {
+    Route::get('list', 'UserController@list')->name('list');
+    Route::prefix('register')->name('register.')->group(function () {
+        Route::get('', 'UserController@register')->name('index');
+        Route::post('', 'UserController@register')->name('index');
+        Route::get('confirm', function () {
+            return redirect()->route('user.list');
+        });
+        Route::post('confirm', 'UserController@registerConfirm')->name('confirm');
+        Route::get('complete', function () {
+            return redirect()->route('user.list');
+        });
+        Route::post('complete', 'UserController@registerComplete')->name('complete');
+    });
+});
 
 Route::prefix('csv')->name('csv.')->group(function () {
     Route::get('', 'CsvController@index')->name('index');

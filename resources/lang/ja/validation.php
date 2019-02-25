@@ -12,7 +12,14 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-    'required'             => ':attributeは必須です',
+    'required' => ':attributeは必須です',
+    'numeric' => ':attributeは半角数字で入力してください',
+    'between' => [
+        'string' => ':attributeは:min～:max文字以内で入力してください',
+     ],
+    'digits_between' => ':attributeは:max桁以内で入力してください',
+    'email' => ':attributeの形式が不正です',
+    'max' => ':attributeは:max文字以内で入力してください',
     'uploaded' => 'アップロードに失敗しました',
 
     /*
@@ -35,6 +42,16 @@ return [
             'file' => 'CSVファイルを指定して下さい',
             'mimes' => 'CSVファイルを指定して下さい',
             'mimetypes' => 'CSVファイルを指定して下さい',
+        ],
+        'name' => [
+            'regex' => ':attributeは半角英字で入力してください',
+        ],
+        'password' => [
+            'regex' => ':attributeは半角英数字で入力してください',
+        ],
+        'confirm_password' => [
+            'regex' => ':attributeは半角英数字で入力してください',
+            'same' => ':attributeはpasswordと同じものを入力してください',
         ],
     ],
 
