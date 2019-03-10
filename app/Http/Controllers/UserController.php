@@ -34,7 +34,12 @@ class UserController extends Controller
 
     public function registerComplete(UserRegisterRequest $request)
     {
-        $this->user->createUserData($request);
+        if ('submit' === $request->input('action')) {
+            $this->user->createUserData($request);
+        } else {
+            return redirect()->route('user.register.index')->withInput($request->input);
+        }
+        
         return view('user.register.complete');
     }
 }

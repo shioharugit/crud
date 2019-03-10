@@ -104,6 +104,6 @@ class CsvController extends Controller
             }
         }
 
-        return redirect()->route('user');
+        return redirect()->route('user.list');
     }
 }

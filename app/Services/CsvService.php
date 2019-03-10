@@ -150,22 +150,37 @@ class CsvService
                     } elseif (8 > mb_strlen($line[config('const.CSV_HEADER_NUM.PASSWORD.INDEX')]) || 16 < mb_strlen($line[config('const.CSV_HEADER_NUM.PASSWORD.INDEX')])) {
                         $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' '.config('const.CSV_HEADER_NUM.PASSWORD.NAME').'は8～16文字以内で入力してください']);
                     }
+                    // emailのユニークチェック
+                    if ($this->user::where('email', $line[config('const.CSV_HEADER_NUM.EMAIL.INDEX')])->exists()) {
+                        $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' この'.config('const.CSV_HEADER_NUM.EMAIL.NAME').'は既に登録されています']);
+                    }
                     break;
                 case config('const.CSV_TYPE.EDIT'):
                 case config('const.CSV_TYPE.DELETE'):
                     // 編集・削除の場合はID存在チェック
                     if (!$this->user::where('id', $line[config('const.CSV_HEADER_NUM.ID.INDEX')])->exists()) {
                         $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' '.config('const.CSV_HEADER_NUM.ID.NAME').'のユーザーが存在しません']);
+                    } else {
+                        // IDが存在する場合は自分自身以外のemailのユニークチェック
+                        if ($this->user::where('email', $line[config('const.CSV_HEADER_NUM.EMAIL.INDEX')])->whereNotIn('id', [$line[config('const.CSV_HEADER_NUM.ID.INDEX')]])->exists()) {
+                            $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' この'.config('const.CSV_HEADER_NUM.EMAIL.NAME').'は既に登録されています']);
+                        }
                     }
                     break;
             }
             // CSV内でIDが重複していないかチェック
-            if ($line[config('const.CSV_HEADER_NUM.ID.INDEX')]) {
+            if (!empty($line[config('const.CSV_HEADER_NUM.ID.INDEX')])) {
                 if (!isset($csv_id_list[$line[config('const.CSV_HEADER_NUM.ID.INDEX')]])) {
                     $csv_id_list[$line[config('const.CSV_HEADER_NUM.ID.INDEX')]] = $line[config('const.CSV_HEADER_NUM.ID.INDEX')];
                 } else {
                     $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' '.config('const.CSV_HEADER_NUM.ID.NAME').'がCSV内で重複しています']);
                 }
+            }
+            // CSV内でemailが重複していないかチェック
+            if (!isset($csv_id_list[$line[config('const.CSV_HEADER_NUM.EMAIL.INDEX')]])) {
+                $csv_id_list[$line[config('const.CSV_HEADER_NUM.EMAIL.INDEX')]] = $line[config('const.CSV_HEADER_NUM.EMAIL.INDEX')];
+            } else {
+                $csv_errors = array_merge($csv_errors, ['Line '.$line_num.' '.config('const.CSV_HEADER_NUM.EMAIL.NAME').'がCSV内で重複しています']);
             }
         }
 

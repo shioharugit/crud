@@ -11,7 +11,7 @@
         {{ csrf_field() }}
         <div class="form-group">
             <label>name</label>
-            <input type="text" class="form-control" placeholder="name" name="name" value="{{old('name')}}">
+            <input type="text" class="form-control" placeholder="半角英字" name="name" value="{{old('name')}}">
             @if(!empty($errors->first('name')))
                 <span class="text-danger"><strong>{{$errors->first('name')}}</strong></span>
             @endif
@@ -39,7 +39,7 @@
         </div>
         <div class="form-group">
             <label>age</label>
-            <input type="text" class="form-control" placeholder="20" name="age" value="{{old('age')}}">
+            <input type="text" class="form-control" placeholder="半角数字2桁" name="age" value="{{old('age')}}">
             @if(!empty($errors->first('age')))
                 <span class="text-danger"><strong>{{$errors->first('age')}}</strong></span>
             @endif

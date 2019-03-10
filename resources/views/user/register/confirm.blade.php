@@ -30,8 +30,8 @@
             <span>{{$user->age}}</span>
             <input type="hidden" name="age" value="{{$user->age}}">
         </div>
-        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-        <button type="submit" name="back" class="btn btn-default">Back</button>
+        <button type="submit" name="action" value="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" name="action" value="back" class="btn btn-default">Back</button>
     </form>
 
 @endsection
