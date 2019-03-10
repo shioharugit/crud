@@ -11,8 +11,6 @@
             <tr>
                 <th>id</th>
                 <th>name</th>
-                <th>email</th>
-                <th>age</th>
                 <th>status</th>
             </tr>
         </thead>
@@ -20,9 +18,7 @@
             @foreach ($items as $item)
             <tr>
                 <td>{{$item->id}}</td>
-                <td>{{$item->name}}</td>
-                <td>{{$item->email}}</td>
-                <td>{{$item->age}}</td>
+                <td><a href="{{route('user.detail', $item->id)}}">{{$item->name}}</a></td>
                 <td>
                     @if (config('const.USER_STATUS.PROVISIONAL_MEMBER') == $item->status)
                         {{ '仮会員' }}

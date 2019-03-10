@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserEditRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Services\UserService as UserService;
 use Illuminate\Http\Request;
@@ -16,22 +17,40 @@ class UserController extends Controller
         $this->user = new UserService();
     }
 
+    /**
+     * 一覧
+     *
+     * @param Request $request
+     */
     public function list(Request $request)
     {
         $items = DB::select('select * from users');
         return view('user.list', ['items' => $items]);
     }
 
-    public function register(Request $request)
+    /**
+     * 登録
+     */
+    public function register()
     {
         return view('user.register.index');
     }
 
+    /**
+     * 登録確認
+     *
+     * @param UserRegisterRequest $request
+     */
     public function registerConfirm(UserRegisterRequest $request)
     {
         return view('user.register.confirm', ['user' => $request]);
     }
 
+    /**
+     * 登録完了
+     *
+     * @param UserRegisterRequest $request
+     */
     public function registerComplete(UserRegisterRequest $request)
     {
         if ('submit' === $request->input('action')) {
@@ -41,5 +60,59 @@ class UserController extends Controller
         }
         
         return view('user.register.complete');
+    }
+
+    /**
+     * 詳細
+     *
+     * @param $id
+     */
+    public function detail($id)
+    {
+        $user = $this->user->getUser($id);
+        if (empty($user)) {
+            return redirect()->route('user.list');
+        }
+        return view('user.detail', ['user' => $user]);
+    }
+
+    /**
+     * 編集
+     *
+     * @param Request $request
+     */
+    public function edit($id)
+    {
+        $user = $this->user->getUser($id);
+        if (empty($user)) {
+            return redirect()->route('user.list');
+        }
+        return view('user.edit.index', ['user' => $user]);
+    }
+
+    /**
+     * 編集確認
+     *
+     * @param UserEditRequest $request
+     */
+    public function editConfirm(UserEditRequest $request)
+    {
+        return view('user.edit.confirm', ['user' => $request]);
+    }
+
+    /**
+     * 編集完了
+     *
+     * @param UserEditRequest $request
+     */
+    public function editComplete(UserEditRequest $request)
+    {
+        if ('submit' === $request->input('action')) {
+            $this->user->updateUserData($request);
+        } else {
+            return redirect()->route('user.edit.index', $request->input('id'))->withInput($request->input);
+        }
+        
+        return view('user.edit.complete');
     }
 }

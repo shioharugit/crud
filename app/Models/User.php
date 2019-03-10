@@ -17,6 +17,7 @@ class User extends Model
         'created_at',
         'updated_at',
     ];
+
     /**
      * users登録処理(複数登録)
      *
@@ -37,4 +38,15 @@ class User extends Model
     {
         return User::where('id', $id)->update($data);
     }
+
+    /**
+     * user取得処理
+     *
+     * @param $id
+     */
+    public function getUser($id)
+    {
+        return User::where('id', $id)->first();
+    }
+
 }

@@ -37,4 +37,7 @@ return [
 
     // CSVインポート最大許容行数
     'CSV_IMPORT_MAX_LINE' => 50,
+
+    // 日付フォーマット
+    'DEFAULT_DATE_FORMAT' => 'Y-m-d H:i:s',
 ];
