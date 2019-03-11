@@ -6,6 +6,35 @@
     <div class="page-header">
         <h1><small>User-List</small></h1>
     </div>
+    <div class="pt-4 pb-4">
+        <form action="{{ route('user.list')}}" method="GET">
+            <dl class="row">
+                <dt class="col-md-3">name</dt>
+                <dd class="col-md-9">
+                    <input type="text" class="form-control" placeholder="半角英字" name="name" value="{{old('name') ? old('name') : $request->input('name')}}">
+                    @if(!empty($errors->first('name')))
+                        <span class="text-danger"><strong>{{$errors->first('name')}}</strong></span>
+                    @endif
+                </dd>
+                <dt class="col-md-3">email</dt>
+                <dd class="col-md-9">
+                    <input type="text" class="form-control" placeholder="email@example.com" name="email" value="{{old('email') ? old('email') : $request->input('email')}}">
+                    @if(!empty($errors->first('email')))
+                        <span class="text-danger"><strong>{{$errors->first('email')}}</strong></span>
+                    @endif
+                </dd>
+                <dt class="col-md-3">age</dt>
+                <dd class="col-md-9">
+                    <input type="text" class="form-control" placeholder="半角数字2桁" name="age" value="{{old('age') ? old('age') : $request->input('age')}}">
+                    @if(!empty($errors->first('age')))
+                        <span class="text-danger"><strong>{{$errors->first('age')}}</strong></span>
+                    @endif
+                </dd>
+            </dl>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -15,14 +44,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($items as $item)
+            @foreach ($users as $user)
             <tr>
-                <td>{{$item->id}}</td>
-                <td><a href="{{route('user.detail', $item->id)}}">{{$item->name}}</a></td>
+                <td>{{$user->id}}</td>
+                <td><a href="{{route('user.detail', $user->id)}}">{{$user->name}}</a></td>
                 <td>
-                    @if (config('const.USER_STATUS.PROVISIONAL_MEMBER') == $item->status)
+                    @if (config('const.USER_STATUS.PROVISIONAL_MEMBER') == $user->status)
                         {{ '仮会員' }}
-                    @elseif (config('const.USER_STATUS.UNSUBSCRIBE') == $item->status)
+                    @elseif (config('const.USER_STATUS.UNSUBSCRIBE') == $user->status)
                         {{ '退会' }}
                     @else
                         {{ '会員' }}
@@ -32,4 +61,10 @@
             @endforeach
         </tbody>
     </table>
+    <div class="paginate">
+        {{ $users->appends(['name' => $request->input('name'), 'email' => $request->input('email'), 'age' => $request->input('age')])->render() }}
+    </div>
+    @if (count($users) === 0)
+        検索結果0件でした
+    @endif
 @endsection

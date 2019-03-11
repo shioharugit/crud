@@ -16,6 +16,27 @@ class UserService
     }
 
     /**
+     * ユーザー一覧処理
+     *
+     * @param $request
+     */
+    public function getUsers($request)
+    {
+        $query = $this->user->query();
+
+        if(!empty($request->input('name'))) {
+            $query->where('name', 'like', '%'.$request->input('name').'%');
+        }
+        if(!empty($request->input('email'))) {
+            $query->where('email', 'like', '%'.$request->input('email').'%');
+        }
+        if(!empty($request->input('age'))) {
+            $query->where('age', $request->input('age'));
+        }
+        return $query->paginate(20);
+    }
+    
+    /**
      * ユーザー登録処理
      *
      * @param $request

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserEditRequest;
+use App\Http\Requests\UserListRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Services\UserService as UserService;
 use Illuminate\Http\Request;
@@ -22,10 +23,10 @@ class UserController extends Controller
      *
      * @param Request $request
      */
-    public function list(Request $request)
+    public function list(UserListRequest $request)
     {
-        $items = DB::select('select * from users');
-        return view('user.list', ['items' => $items]);
+        $users = $this->user->getUsers($request);
+        return view('user.list', ['users' => $users, 'request' => $request]);
     }
 
     /**
@@ -58,7 +59,6 @@ class UserController extends Controller
         } else {
             return redirect()->route('user.register.index')->withInput($request->input);
         }
-        
         return view('user.register.complete');
     }
 
@@ -112,7 +112,6 @@ class UserController extends Controller
         } else {
             return redirect()->route('user.edit.index', $request->input('id'))->withInput($request->input);
         }
-        
         return view('user.edit.complete');
     }
 }

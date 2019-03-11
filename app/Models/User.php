@@ -40,7 +40,7 @@ class User extends Model
     }
 
     /**
-     * user取得処理
+     * users取得処理
      *
      * @param $id
      */
