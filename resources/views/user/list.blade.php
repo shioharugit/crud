@@ -6,35 +6,40 @@
     <div class="page-header">
         <h1><small>User-List</small></h1>
     </div>
-    <div class="pt-4 pb-4">
-        <form action="{{ route('user.list')}}" method="GET">
-            <dl class="row">
-                <dt class="col-md-3">name</dt>
-                <dd class="col-md-9">
-                    <input type="text" class="form-control" placeholder="半角英字" name="name" value="{{old('name') ? old('name') : $request->input('name')}}">
-                    @if(!empty($errors->first('name')))
-                        <span class="text-danger"><strong>{{$errors->first('name')}}</strong></span>
-                    @endif
-                </dd>
-                <dt class="col-md-3">email</dt>
-                <dd class="col-md-9">
-                    <input type="text" class="form-control" placeholder="email@example.com" name="email" value="{{old('email') ? old('email') : $request->input('email')}}">
-                    @if(!empty($errors->first('email')))
-                        <span class="text-danger"><strong>{{$errors->first('email')}}</strong></span>
-                    @endif
-                </dd>
-                <dt class="col-md-3">age</dt>
-                <dd class="col-md-9">
-                    <input type="text" class="form-control" placeholder="半角数字2桁" name="age" value="{{old('age') ? old('age') : $request->input('age')}}">
-                    @if(!empty($errors->first('age')))
-                        <span class="text-danger"><strong>{{$errors->first('age')}}</strong></span>
-                    @endif
-                </dd>
-            </dl>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
+
+    <p class="pt-2"><button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Filter</button></p>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            <form action="{{ route('user.list')}}" method="GET">
+                <dl class="row">
+                    <dt class="col-md-3">name</dt>
+                    <dd class="col-md-9">
+                        <input type="text" class="form-control" placeholder="半角英字" name="name" value="{{old('name') ? old('name') : $request->input('name')}}">
+                        @if(!empty($errors->first('name')))
+                            <span class="text-danger"><strong>{{$errors->first('name')}}</strong></span>
+                        @endif
+                    </dd>
+                    <dt class="col-md-3">email</dt>
+                    <dd class="col-md-9">
+                        <input type="text" class="form-control" placeholder="email@example.com" name="email" value="{{old('email') ? old('email') : $request->input('email')}}">
+                        @if(!empty($errors->first('email')))
+                            <span class="text-danger"><strong>{{$errors->first('email')}}</strong></span>
+                        @endif
+                    </dd>
+                    <dt class="col-md-3">age</dt>
+                    <dd class="col-md-9">
+                        <input type="text" class="form-control" placeholder="半角数字2桁" name="age" value="{{old('age') ? old('age') : $request->input('age')}}">
+                        @if(!empty($errors->first('age')))
+                            <span class="text-danger"><strong>{{$errors->first('age')}}</strong></span>
+                        @endif
+                    </dd>
+                </dl>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
     </div>
 
+    <div class="pt-3 pb-2">
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -67,4 +72,6 @@
     @if (count($users) === 0)
         検索結果0件でした
     @endif
+    </div>
+
 @endsection

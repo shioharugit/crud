@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CsvRequest;
 use App\Services\CsvService as CsvService;
+use DB;
+use Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use SplFileObject;
@@ -85,24 +87,32 @@ class CsvController extends Controller
         $file = null;
         unlink($path);
 
-        // 登録
-        if (isset($records[config('const.CSV_TYPE.REGISTER')])) {
-            $this->csv->createCsvData($records[config('const.CSV_TYPE.REGISTER')]);
-        }
-
-        // 編集
-        if (isset($records[config('const.CSV_TYPE.EDIT')])) {
-            foreach ($records[config('const.CSV_TYPE.EDIT')] as $update_val) {
-                $this->csv->updateCsvData($update_val['id'], $update_val);
+        DB::beginTransaction();
+        try {
+            // 登録
+            if (isset($records[config('const.CSV_TYPE.REGISTER')])) {
+                $this->csv->createCsvData($records[config('const.CSV_TYPE.REGISTER')]);
             }
-        }
 
-        // 削除
-        if (isset($records[config('const.CSV_TYPE.DELETE')])) {
-            foreach ($records[config('const.CSV_TYPE.DELETE')] as $delete_val) {
-                $this->csv->deleteCsvData($delete_val['id'], $delete_val);
+            // 編集
+            if (isset($records[config('const.CSV_TYPE.EDIT')])) {
+                foreach ($records[config('const.CSV_TYPE.EDIT')] as $update_val) {
+                    $this->csv->updateCsvData($update_val['id'], $update_val);
+                }
             }
+
+            // 削除
+            if (isset($records[config('const.CSV_TYPE.DELETE')])) {
+                foreach ($records[config('const.CSV_TYPE.DELETE')] as $delete_val) {
+                    $this->csv->deleteCsvData($delete_val['id'], $delete_val);
+                }
+            }
+        } catch(\Exception $e) {
+            DB::rollback();
+            Log::error('アップロードしたCSVのデータの登録・編集・削除中に例外が発生しました:'.$e->getMessage());
+            abort(500);
         }
+        DB::commit();
 
         return redirect()->route('user.list');
     }

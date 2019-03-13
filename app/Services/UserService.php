@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\User as User;
+use DB;
+use Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +35,7 @@ class UserService
         if(!empty($request->input('age'))) {
             $query->where('age', $request->input('age'));
         }
-        return $query->paginate(20);
+        return $query->paginate(10);
     }
     
     /**
@@ -53,7 +55,16 @@ class UserService
             'created_at' => $now,
             'updated_at' => $now,
         ];
-        return $this->user->createUsers($user);
+
+        DB::beginTransaction();
+        try {
+            $this->user->createUsers($user);
+        } catch(\Exception $e) {
+            DB::rollback();
+            Log::error('ユーザー登録中に例外が発生しました:'.$e->getMessage());
+            abort(500);
+        }
+        DB::commit();
     }
 
     /**
@@ -83,6 +94,15 @@ class UserService
         if (!empty($request->password)) {
             $user['password'] = password_hash($request->password, PASSWORD_BCRYPT);
         }
-        return $this->user->updateUser($request->id, $user);
+
+        DB::beginTransaction();
+        try {
+            $this->user->updateUser($request->id, $user);
+        } catch(\Exception $e) {
+            DB::rollback();
+            Log::error('ユーザー更新中に例外が発生しました:'.$e->getMessage());
+            abort(500);
+        }
+        DB::commit();
     }
 }

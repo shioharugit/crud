@@ -18,7 +18,8 @@
         <dd class="col-md-9">{{ $user->age }}</dd>
     </dl>
 
+    <?php $url = parse_url(url()->previous()); ?>
     <button type="submit" onclick="location.href='{{route('user.edit.index', $user->id)}}'" class="btn btn-primary">Edit</button>
-    <button type="submit" onclick="location.href='{{route('user.list')}}'" class="btn btn-default">Back</button>
+    <button type="submit" onclick="location.href='{{route('user.list', $url['query'] ?? '' )}}'" class="btn btn-default">Back</button>
 
 @endsection

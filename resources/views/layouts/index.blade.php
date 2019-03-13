@@ -7,7 +7,7 @@
         <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
         <link href="{{asset('css/sticky-footer.css')}}" rel="stylesheet" media="screen">
     </head>
-    <body>
+    <body class="bg-light">
         @include('layouts.partials.header')
         <div class="container">
             @yield('content')

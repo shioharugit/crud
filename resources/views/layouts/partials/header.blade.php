@@ -1,6 +1,6 @@
 <!-- header & grobal navi -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-    <a class="navbar-brand" href="#">CRUD Sample</a>
+    <a class="navbar-brand" href="{{ route('user.list') }}">CRUD Sample</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar" aria-controls="Navbar" aria-expanded="true" aria-label="ナビゲーションの切替">
         <span class="navbar-toggler-icon"></span>
     </button>
