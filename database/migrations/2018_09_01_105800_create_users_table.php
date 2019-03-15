@@ -19,7 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->collation('utf8mb4_bin')->comment('メールアドレス(RFC基準)');
             $table->string('password')->collation('utf8mb4_bin')->nullable()->comment('パスワード');
             $table->integer('age')->nullable()->comment('年齢');
-            $table->integer('status')->comment('ステータス(0:会員 1:仮会員 9:退会)');
+            $table->integer('status')->comment('ステータス(0:会員 1:仮会員 9:退会)')->default(0);
+            $table->integer('authority')->comment('権限(100:システム管理者 150:管理者 500:一般 900:TEST)')->default(500);
             $table->rememberToken();
             $table->timestamps();
         });

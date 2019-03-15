@@ -7,6 +7,6 @@
         <h1><small>User-Edit-Complete</small></h1>
     </div>
 
-    <button type="submit" onclick="location.href='{{route('user.list')}}'" class="btn btn-default">List</button>
+    <button type="submit" onclick="location.href='{{route('user.list')}}'" class="btn btn-secondary">List</button>
 
 @endsection

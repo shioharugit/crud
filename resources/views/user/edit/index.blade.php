@@ -53,5 +53,5 @@
         </dl>
         <button type="submit" class="btn btn-primary" name="action" value="submit">Submit</button>
     </form>
-    <button type="submit" onclick="location.href='{{route('user.detail', $user->id)}}'" class="btn btn-default mt-2">Back</button>
+    <button type="submit" onclick="location.href='{{route('user.detail', $user->id)}}'" class="btn btn-secondary mt-2">Back</button>
 @endsection

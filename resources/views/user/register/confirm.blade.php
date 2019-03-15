@@ -34,7 +34,7 @@
             </dd>
         </dl>
         <button type="submit" name="action" value="submit" class="btn btn-primary">Submit</button>
-        <button type="submit" name="action" value="back" class="btn btn-default">Back</button>
+        <button type="submit" name="action" value="back" class="btn btn-secondary">Back</button>
     </form>
 
 @endsection
