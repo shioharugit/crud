@@ -4,6 +4,9 @@ return [
     // usersテーブルステータス(0:会員 1:仮会員 9:退会)
     'USER_STATUS' => ['MEMBER' => '0', 'PROVISIONAL_MEMBER' => '1', 'UNSUBSCRIBE' => '9'],
 
+    // usersテーブル権限(100:システム管理者 150:管理者 500:一般 900:TEST)
+    'USER_AUTHORITY' => ['SYSTEMADMIN' => '100', 'ADMIN' => '150', 'USER' => '500', 'TEST' => '900'],
+
     // CSVの登録タイプ(1:登録 2:編集 3:削除)
     'CSV_TYPE' => ['REGISTER' => '1', 'EDIT' => '2', 'DELETE' => '3'],
 
@@ -32,6 +35,10 @@ return [
         'AGE' => [
             'NAME' => 'age',
             'INDEX' => 5,
+        ],
+        'AUTHORITY' => [
+            'NAME' => 'authority',
+            'INDEX' => 6,
         ],
     ],
 

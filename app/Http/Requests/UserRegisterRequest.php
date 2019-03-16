@@ -29,6 +29,7 @@ class UserRegisterRequest extends FormRequest
             'password' => 'required|regex:/^[0-9a-zA-Z]+$/|between:8,16',
             'confirm_password' => 'required|regex:/^[0-9a-zA-Z]+$/|between:8,16|same:password',
             'age' => 'nullable|numeric|digits_between:0,2',
+            'authority' => 'required|in:'.config('const.USER_AUTHORITY.ADMIN').','.config('const.USER_AUTHORITY.USER'),
         ];
     }
 }

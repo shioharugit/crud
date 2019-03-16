@@ -14,6 +14,7 @@ class User extends Model
         'password',
         'age',
         'status',
+        'authority',
         'created_at',
         'updated_at',
     ];
@@ -36,17 +37,29 @@ class User extends Model
      */
     public function updateUser($id, $data)
     {
-        return User::where('id', $id)->update($data);
+        // system管理者は変更不可なので取得させない
+        return User::where('id', $id)->where('authority', '!=', config('const.USER_AUTHORITY.SYSTEMADMIN'))->update($data);
     }
 
     /**
      * users取得処理
      *
      * @param $id
+     * @param $authority
      */
-    public function getUser($id)
+    public function getDetailUser($id, $authority)
     {
-        return User::where('id', $id)->first();
+        return User::where('id', $id)->where('authority', '>=', $authority)->first();
     }
 
+    /**
+     * 編集用のusers取得処理
+     *
+     * @param $id
+     */
+    public function getEditUser($id)
+    {
+        // system管理者は変更不可なので取得させない
+        return User::where('id', $id)->where('authority', '!=', config('const.USER_AUTHORITY.SYSTEMADMIN'))->first();
+    }
 }

@@ -69,7 +69,7 @@ class UserController extends Controller
      */
     public function detail($id)
     {
-        $user = $this->user->getUser($id);
+        $user = $this->user->getDetailUser($id);
         if (empty($user)) {
             return redirect()->route('user.list');
         }
@@ -83,7 +83,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->user->getUser($id);
+        $user = $this->user->getEditUser($id);
         if (empty($user)) {
             return redirect()->route('user.list');
         }
@@ -108,7 +108,7 @@ class UserController extends Controller
     public function editComplete(UserEditRequest $request)
     {
         if ('submit' === $request->input('action')) {
-            $this->user->updateUserData($request);
+            $this->user->editUserData($request);
         } else {
             return redirect()->route('user.edit.index', $request->input('id'))->withInput($request->input);
         }

@@ -257,6 +257,9 @@ class CsvService
                 case config('const.CSV_HEADER_NUM.AGE.INDEX'):
                     $rules[$val['INDEX']] = 'nullable|numeric|digits_between:0,2';
                     break;
+                case config('const.CSV_HEADER_NUM.AUTHORITY.INDEX'):
+                    $rules[$val['INDEX']] = 'required|in:'.config('const.USER_AUTHORITY.ADMIN').','.config('const.USER_AUTHORITY.USER');
+                    break;
                 default:
                     break;
             }
@@ -301,6 +304,10 @@ class CsvService
                 case config('const.CSV_HEADER_NUM.AGE.INDEX'):
                     $messages[$val['INDEX'].'.numeric'] = 'Line '.$line_num.' '.$val['NAME'].'は半角数字で入力してください';
                     $messages[$val['INDEX'].'.digits_between'] = 'Line '.$line_num.' '.$val['NAME'].'は:max桁以内で入力してください';
+                    break;
+                case config('const.CSV_HEADER_NUM.AUTHORITY.INDEX'):
+                    $messages[$val['INDEX'].'.required'] = 'Line '.$line_num.' '.$val['NAME'].'は必須です';
+                    $messages[$val['INDEX'].'.in'] = 'Line '.$line_num.' '.$val['NAME'].'は:valuesの中から入力してください';
                     break;
                 default:
                     break;
