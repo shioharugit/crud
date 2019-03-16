@@ -24,7 +24,7 @@ class UserService
      */
     public function getUsers($request)
     {
-        $query = $this->user->query();
+        $query = $this->user->query()->where('authority', '>=', Auth::user()->authority);
 
         if(!empty($request->input('name'))) {
             $query->where('name', 'like', '%'.$request->input('name').'%');
@@ -72,9 +72,19 @@ class UserService
      *
      * @param $id
      */
-    public function getUser($id)
+    public function getDetailUser($id)
     {
-        return $this->user->getUser($id);
+        return $this->user->getDetailUser($id, Auth::user()->authority);
+    }
+
+    /**
+     * ユーザー編集用の詳細取得処理
+     *
+     * @param $id
+     */
+    public function getEditUser($id)
+    {
+        return $this->user->getEditUser($id);
     }
 
     /**
@@ -82,13 +92,14 @@ class UserService
      *
      * @param $request
      */
-    public function updateUserData($request)
+    public function editUserData($request)
     {
         $now = date(config('const.DEFAULT_DATE_FORMAT'));
         $user = [
             'name' => $request->name,
             'email' => $request->email,
             'age' => $request->age,
+            'authority' => $request->authority,
             'updated_at' => $now,
         ];
         if (!empty($request->password)) {

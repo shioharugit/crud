@@ -36,6 +36,10 @@ return [
             'NAME' => 'age',
             'INDEX' => 5,
         ],
+        'AUTHORITY' => [
+            'NAME' => 'authority',
+            'INDEX' => 6,
+        ],
     ],
 
     // CSVインポート最大許容行数

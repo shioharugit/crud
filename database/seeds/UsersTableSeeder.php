@@ -54,6 +54,18 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => $now,
             ],
         ];
+        for ($i = 1; $i <= 30; $i++) {
+            $param[] = [
+                'name' => 'user',
+                'email' => 'user'.$i.'@example.com',
+                'password' => password_hash('password', PASSWORD_BCRYPT),
+                'age' => 20,
+                'status' => config('const.USER_STATUS.MEMBER'),
+                'authority' => config('const.USER_AUTHORITY.USER'),
+                'created_at' => $now,
+                'updated_at' => $now,
+            ];
+        }
         DB::table('users')->insert($param);
     }
 }

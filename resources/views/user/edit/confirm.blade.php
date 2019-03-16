@@ -16,6 +16,15 @@
                 {{$user->id}}
                 <input type="hidden" name="id" value="{{$user->id}}">
             </dd>
+            <dt class="col-md-3">authority</dt>
+            <dd class="col-md-9">
+                @if(config('const.USER_AUTHORITY.ADMIN') == $user->authority)
+                    管理者
+                @elseif(config('const.USER_AUTHORITY.USER') == $user->authority)
+                    一般
+                @endif
+                <input type="hidden" name="authority" value="{{$user->authority}}">
+            </dd>
             <dt class="col-md-3">name</dt>
             <dd class="col-md-9">
                 {{$user->name}}

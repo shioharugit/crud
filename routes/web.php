@@ -20,11 +20,13 @@ Route::get('/', function () {
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 
+/*
 // パスワードリセット機能
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+*/
 
 // ログインが必要な機能
 Route::middleware('auth')->group(function() {
@@ -37,7 +39,7 @@ Route::middleware('auth')->group(function() {
         // 一覧
         Route::get('list', 'UserController@list')->name('list');
         // 登録機能
-        Route::prefix('register')->name('register.')->group(function () {
+        Route::prefix('register')->name('register.')->middleware('can:admin-higher')->group(function () {
             // 登録
             Route::get('', 'UserController@register')->name('index');
             // 確認
@@ -54,7 +56,7 @@ Route::middleware('auth')->group(function() {
         // 詳細
         Route::get('detail/{id}', 'UserController@detail')->name('detail');
         // 編集機能
-        Route::prefix('edit')->name('edit.')->group(function () {
+        Route::prefix('edit')->name('edit.')->middleware('can:admin-higher')->group(function () {
             // 編集
             Route::get('{id}', 'UserController@edit')->name('index');
             // 確認
@@ -71,7 +73,7 @@ Route::middleware('auth')->group(function() {
     });
 
     // CSV機能
-    Route::prefix('csv')->name('csv.')->group(function () {
+    Route::prefix('csv')->name('csv.')->middleware('can:systemadmin-only')->group(function () {
         // CSV機能画面
         Route::get('', 'CsvController@index')->name('index');
         // import

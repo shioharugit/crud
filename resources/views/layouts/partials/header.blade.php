@@ -11,12 +11,16 @@
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('user.list') }}">List</a>
-                        <a class="dropdown-item" href="{{ route('user.register.index') }}">Register</a>
+                        @can('admin-higher')
+                            <a class="dropdown-item" href="{{ route('user.register.index') }}">Register</a>
+                        @endcan
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('csv.index') }}">Csv</a>
-                </li>
+                @can('systemadmin-only')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('csv.index') }}">Csv</a>
+                    </li>
+                @endcan
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}">Logout</a>
                 </li>

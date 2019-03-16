@@ -15,6 +15,26 @@
                 {{$user->id}}
                 <input type="hidden" name="id" value="{{$user->id}}">
             </dd>
+            <dt class="col-md-3">authority<span class="text-danger small">(必須)</span></dt>
+            <dd class="col-md-9">
+                <select class="form-control" name="authority">
+                    <?php
+                        $authority = old('authority') ? old('authority') : $user->authority;
+                        $admin_selected = '';
+                        $user_selected = '';
+                        if($authority == config('const.USER_AUTHORITY.ADMIN')) {
+                            $admin_selected = 'selected';
+                        } else {
+                            $user_selected = 'selected';
+                        }
+                    ?>
+                    <option value="{{config('const.USER_AUTHORITY.ADMIN')}}" {{$admin_selected}}>管理者</option>
+                    <option value="{{config('const.USER_AUTHORITY.USER')}}" {{$user_selected}}>一般</option>
+                </select>
+                @if(!empty($errors->first('authority')))
+                    <span class="text-danger"><strong>{{$errors->first('authority')}}</strong></span>
+                @endif
+            </dd>
             <dt class="col-md-3">name<span class="text-danger small">(必須)</span></dt>
             <dd class="col-md-9">
                 <input type="text" class="form-control" placeholder="半角英字" name="name" value="{{old('name') ? old('name') : $user->name}}">
@@ -32,14 +52,14 @@
             <dt class="col-md-3">password</dt>
             <dd class="col-md-9">
                 <input type="password" class="form-control" placeholder="半角英数字8文字以上16文字以内" name="password">
-                @if(!empty($errors->first('email')))
+                @if(!empty($errors->first('password')))
                     <span class="text-danger"><strong>{{$errors->first('password')}}</strong></span>
                 @endif
             </dd>
             <dt class="col-md-3">confirm password</dt>
             <dd class="col-md-9">
                 <input type="password" class="form-control" placeholder="passwordと同じものを入力" name="confirm_password">
-                @if(!empty($errors->first('email')))
+                @if(!empty($errors->first('confirm_password')))
                     <span class="text-danger"><strong>{{$errors->first('confirm_password')}}</strong></span>
                 @endif
             </dd>
