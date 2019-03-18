@@ -32,6 +32,7 @@ class UserEditRequest extends FormRequest
             'confirm_password' => 'required_with:password|nullable|regex:/^[0-9a-zA-Z]+$/|between:8,16|same:password',
             'age' => 'nullable|numeric|digits_between:0,2',
             'authority' => 'required|in:'.config('const.USER_AUTHORITY.ADMIN').','.config('const.USER_AUTHORITY.USER'),
+            'status' => 'required|in:'.config('const.USER_STATUS.MEMBER').','.config('const.USER_STATUS.UNSUBSCRIBE'),
         ];
     }
 }

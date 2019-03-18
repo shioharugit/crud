@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -35,5 +37,18 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * ログイン条件の変更
+     *
+     * @param Request $request
+     */
+    public function credentials(Request $request)
+    {
+        $authConditionsOrigin = $request->only('email', 'password');
+        // 会員のみログイン可能
+        $authConditionsCustom = array_merge($authConditionsOrigin, ['status' => config('const.USER_STATUS.MEMBER')]);
+        return $authConditionsCustom;
     }
 }

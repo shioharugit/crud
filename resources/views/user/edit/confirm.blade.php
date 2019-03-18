@@ -47,6 +47,15 @@
                     {{$user->age}}
                     <input type="hidden" name="age" value="{{$user->age}}">
                 </dd>
+                <dt class="col-md-3">status</dt>
+                <dd class="col-md-9">
+                    @if(config('const.USER_STATUS.MEMBER') == $user->status)
+                        会員
+                    @elseif(config('const.USER_STATUS.UNSUBSCRIBE') == $user->status)
+                        退会
+                    @endif
+                    <input type="hidden" name="status" value="{{$user->status}}">
+                </dd>
             </dl>
             <button type="submit" name="action" value="submit" class="btn btn-primary btn-block">Submit</button>
             <button type="submit" name="action" value="back" class="btn btn-secondary btn-block mt-2">Back</button>

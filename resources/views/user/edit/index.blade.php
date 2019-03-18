@@ -70,6 +70,26 @@
                         <span class="text-danger"><strong>{{$errors->first('age')}}</strong></span>
                     @endif
                 </dd>
+                <dt class="col-md-3">status<span class="text-danger small">(必須)</span></dt>
+                <dd class="col-md-9">
+                    <select class="form-control" name="status">
+                        <?php
+                            $status = old('status') ? old('status') : $user->status;
+                            $member_selected = '';
+                            $unscribe_selected = '';
+                            if($status == config('const.USER_STATUS.MEMBER')) {
+                                $member_selected = 'selected';
+                            } else {
+                                $unscribe_selected = 'selected';
+                            }
+                        ?>
+                        <option value="{{config('const.USER_STATUS.MEMBER')}}" {{$member_selected}}>会員</option>
+                        <option value="{{config('const.USER_STATUS.UNSUBSCRIBE')}}" {{$unscribe_selected}}>退会</option>
+                    </select>
+                    @if(!empty($errors->first('status')))
+                        <span class="text-danger"><strong>{{$errors->first('status')}}</strong></span>
+                    @endif
+                </dd>
             </dl>
             <button type="submit" class="btn btn-primary btn-block" name="action" value="submit">Submit</button>
         </form>

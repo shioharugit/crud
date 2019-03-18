@@ -100,6 +100,7 @@ class UserService
             'email' => $request->email,
             'age' => $request->age,
             'authority' => $request->authority,
+            'status' => $request->status,
             'updated_at' => $now,
         ];
         if (!empty($request->password)) {
