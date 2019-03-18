@@ -6,10 +6,9 @@
     <div class="page-header">
         <h1><small>User-List</small></h1>
     </div>
-
-    <p class="pt-2"><button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Filter</button></p>
-    <div class="collapse" id="collapseExample">
-        <div class="card card-body">
+    <div class="card card-body mt-4">
+        <p><button type="button" class="btn btn-info btn-block" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Filter</button></p>
+        <div class="collapse mb-3" id="collapseExample">
             <form action="{{ route('user.list')}}" method="GET">
                 <dl class="row">
                     <dt class="col-md-3">name</dt>
@@ -34,44 +33,40 @@
                         @endif
                     </dd>
                 </dl>
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary btn-block">Search</button>
             </form>
         </div>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($users as $user)
+                <tr>
+                    <td>{{$user->id}}</td>
+                    <td><a href="{{route('user.detail', $user->id)}}">{{$user->name}}</a></td>
+                    <td>
+                        @if (config('const.USER_STATUS.PROVISIONAL_MEMBER') == $user->status)
+                            {{ '仮会員' }}
+                        @elseif (config('const.USER_STATUS.UNSUBSCRIBE') == $user->status)
+                            {{ '退会' }}
+                        @else
+                            {{ '会員' }}
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <div class="paginate">
+            {{ $users->appends(['name' => $request->input('name'), 'email' => $request->input('email'), 'age' => $request->input('age')])->render() }}
+        </div>
+        @if (count($users) === 0)
+            検索結果0件でした
+        @endif
     </div>
-
-    <div class="pt-3 pb-2">
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>name</th>
-                <th>status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($users as $user)
-            <tr>
-                <td>{{$user->id}}</td>
-                <td><a href="{{route('user.detail', $user->id)}}">{{$user->name}}</a></td>
-                <td>
-                    @if (config('const.USER_STATUS.PROVISIONAL_MEMBER') == $user->status)
-                        {{ '仮会員' }}
-                    @elseif (config('const.USER_STATUS.UNSUBSCRIBE') == $user->status)
-                        {{ '退会' }}
-                    @else
-                        {{ '会員' }}
-                    @endif
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <div class="paginate">
-        {{ $users->appends(['name' => $request->input('name'), 'email' => $request->input('email'), 'age' => $request->input('age')])->render() }}
-    </div>
-    @if (count($users) === 0)
-        検索結果0件でした
-    @endif
-    </div>
-
 @endsection

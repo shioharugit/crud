@@ -35,7 +35,7 @@ class UserService
         if(!empty($request->input('age'))) {
             $query->where('age', $request->input('age'));
         }
-        return $query->paginate(10);
+        return $query->orderBy('id', 'DESC')->paginate(10);
     }
     
     /**
