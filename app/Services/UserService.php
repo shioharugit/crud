@@ -35,7 +35,7 @@ class UserService
         if(!empty($request->input('age'))) {
             $query->where('age', $request->input('age'));
         }
-        return $query->paginate(10);
+        return $query->orderBy('id', 'DESC')->paginate(10);
     }
     
     /**
@@ -100,6 +100,7 @@ class UserService
             'email' => $request->email,
             'age' => $request->age,
             'authority' => $request->authority,
+            'status' => $request->status,
             'updated_at' => $now,
         ];
         if (!empty($request->password)) {
