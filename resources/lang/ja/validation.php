@@ -12,7 +12,6 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-    'failed' => 'These credentials do not match our records.あああああああああ',
     'required' => ':attributeは必須です',
     'numeric' => ':attributeは半角数字で入力してください',
     'between' => [
@@ -24,7 +23,7 @@ return [
     'uploaded' => 'アップロードに失敗しました',
     'unique' => 'この:attributeは既に登録されています',
     'in' => ':attributeが不正です',
-    'required_with'        => ':valuesを入力した場合:attributeは必須です',
+    'required_with' => ':valuesを入力した場合:attributeは必須です',
 
     /*
     |--------------------------------------------------------------------------
