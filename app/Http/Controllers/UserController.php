@@ -6,8 +6,6 @@ use App\Http\Requests\UserEditRequest;
 use App\Http\Requests\UserListRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Services\UserService as UserService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -21,7 +19,7 @@ class UserController extends Controller
     /**
      * 一覧
      *
-     * @param Request $request
+     * @param UserListRequest $request
      */
     public function list(UserListRequest $request)
     {
@@ -79,7 +77,7 @@ class UserController extends Controller
     /**
      * 編集
      *
-     * @param Request $request
+     * @param $id
      */
     public function edit($id)
     {
