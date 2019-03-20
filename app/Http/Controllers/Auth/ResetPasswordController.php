@@ -25,7 +25,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/user/list';
 
     /**
      * Create a new controller instance.
@@ -35,5 +35,20 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * Get the password reset validation rules.
+     *
+     * @return array
+     */
+    protected function rules()
+    {
+        return [
+            'token' => 'required',
+            'email' => 'required|email|max:255',
+            'password' => 'required|regex:/^[0-9a-zA-Z]+$/|between:8,16',
+            'password_confirmation' => 'required|regex:/^[0-9a-zA-Z]+$/|between:8,16|same:password',
+        ];
     }
 }

@@ -44,9 +44,9 @@
                 </dd>
                 <dt class="col-md-3">confirm password<span class="text-danger small">(必須)</span></dt>
                 <dd class="col-md-9">
-                    <input type="password" class="form-control" placeholder="passwordと同じものを入力" name="confirm_password">
-                    @if(!empty($errors->first('confirm_password')))
-                        <span class="text-danger"><strong>{{$errors->first('confirm_password')}}</strong></span>
+                    <input type="password" class="form-control" placeholder="passwordと同じものを入力" name="password_confirmation">
+                    @if(!empty($errors->first('password_confirmation')))
+                        <span class="text-danger"><strong>{{$errors->first('password_confirmation')}}</strong></span>
                     @endif
                 </dd>
                 <dt class="col-md-3">age</dt>

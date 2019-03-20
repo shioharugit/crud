@@ -40,7 +40,7 @@
                         (入力したパスワード)
                     @endif
                     <input type="hidden" name="password" value="{{$user->password}}">
-                    <input type="hidden" name="confirm_password" value="{{$user->confirm_password}}">
+                    <input type="hidden" name="password_confirmation" value="{{$user->password_confirmation}}">
                 </dd>
                 <dt class="col-md-3">age</dt>
                 <dd class="col-md-9">

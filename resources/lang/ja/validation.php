@@ -52,7 +52,7 @@ return [
         'password' => [
             'regex' => ':attributeは半角英数字で入力してください',
         ],
-        'confirm_password' => [
+        'password_confirmation' => [
             'regex' => ':attributeは半角英数字で入力してください',
             'same' => ':attributeはpasswordと同じものを入力してください',
         ],
