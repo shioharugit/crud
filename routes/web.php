@@ -20,6 +20,33 @@ Route::get('/', function () {
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 
+// 仮会員登録機能
+Route::prefix('preregister')->name('preregister.')->group(function () {
+    // 登録
+    Route::get('', 'PreregisterController@preregister')->name('index');
+    // 完了
+    Route::get('complete', function () {
+        return redirect()->route('login');
+    });
+    Route::post('complete', 'PreregisterController@preregisterComplete')->name('complete');
+});
+
+// 会員登録機能
+Route::prefix('register')->name('register.')->group(function () {
+    // 登録
+    Route::get('/{token}', 'RegisterController@register')->name('index');
+    // 確認
+    Route::get('confirm', function () {
+        return redirect()->route('login');
+    });
+    Route::post('confirm', 'RegisterController@confirm')->name('confirm');
+    // 完了
+    Route::get('complete', function () {
+        return redirect()->route('login');
+    });
+    Route::post('complete', 'RegisterController@complete')->name('complete');
+});
+
 // パスワードリセット機能
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');

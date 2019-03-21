@@ -1,13 +1,34 @@
-@extends('layouts.app')
+@extends('layouts.index')
 
 @section('content')
+    <div class="page-header">
+        <h1><small>Preregister</small></h1>
+    </div>
+    <div class="card card-body mt-4">
+        <form action="{{ route('preregister.complete') }}" method="POST">
+            {{ csrf_field() }}
+            <dl class="row">
+                <dt class="col-md-3">email<span class="text-danger small">(必須)</span></dt>
+                <dd class="col-md-9">
+                    <input type="email" class="form-control" placeholder="email@example.com" name="email" value="{{old('email')}}">
+                    @if(!empty($errors->first('email')))
+                        <span class="text-danger"><strong>{{$errors->first('email')}}</strong></span>
+                    @endif
+                </dd>
+            </dl>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+
+
+<?php /*
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('preregister') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -73,4 +94,5 @@
         </div>
     </div>
 </div>
+*/ ?>
 @endsection
