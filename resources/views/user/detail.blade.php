@@ -40,11 +40,13 @@
             </dd>
         </dl>
         @can('admin-higher')
-            @if((int)$user->id !== 1 && (int)$user->authority >= (int)Auth::user()->authority)
-                <?php $url = parse_url(url()->previous()); ?>
+            @if(config('const.USER_AUTHORITY.SYSTEMADMIN') != $user->authority
+                && config('const.USER_AUTHORITY.TEST') != $user->authority
+                && (int)$user->authority >= (int)Auth::user()->authority)
                 <button type="submit" onclick="location.href='{{route('user.edit.index', $user->id)}}'" class="btn btn-primary btn-block">Edit</button>
             @endif
         @endcan
+        <?php $url = parse_url(url()->previous()); ?>
         <button type="submit" onclick="location.href='{{route('user.list', $url['query'] ?? '' )}}'" class="btn btn-secondary btn-block mt-2">Back</button>
     </div>
 @endsection

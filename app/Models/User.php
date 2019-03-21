@@ -37,8 +37,11 @@ class User extends Model
      */
     public function updateUser($id, $data)
     {
-        // system管理者は変更不可なので取得させない
-        return User::where('id', $id)->where('authority', '!=', config('const.USER_AUTHORITY.SYSTEMADMIN'))->update($data);
+        // system管理者、TESTユーザーは変更不可なので取得させない
+        return User::where('id', $id)
+            ->where('authority', '!=', config('const.USER_AUTHORITY.SYSTEMADMIN'))
+            ->where('authority', '!=', config('const.USER_AUTHORITY.TEST'))
+            ->update($data);
     }
 
     /**
@@ -59,7 +62,10 @@ class User extends Model
      */
     public function getEditUser($id)
     {
-        // system管理者は変更不可なので取得させない
-        return User::where('id', $id)->where('authority', '!=', config('const.USER_AUTHORITY.SYSTEMADMIN'))->first();
+        // system管理者、TESTユーザーは変更不可なので取得させない
+        return User::where('id', $id)
+            ->where('authority', '!=', config('const.USER_AUTHORITY.SYSTEMADMIN'))
+            ->where('authority', '!=', config('const.USER_AUTHORITY.TEST'))
+            ->first();
     }
 }
