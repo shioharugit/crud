@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserEditRequest;
-use App\Http\Requests\UserListRequest;
-use App\Http\Requests\UserRegisterRequest;
-use App\Services\UserService as UserService;
+use App\Http\Requests\RegisterRequest;
+use App\Services\RegisterService as RegisterService;
 
 class RegisterController extends Controller
 {
-    private $user;
+    private $register;
 
     public function __construct()
     {
-        $this->user = new UserService();
+        $this->register = new RegisterService();
     }
 
     /**
@@ -22,36 +20,38 @@ class RegisterController extends Controller
      * @param $token
      */
     public function register($token)
-    {dd($token,'aaaa');
-        $user = $this->user->getEditUser($id);
+    {
+        $message = '';
+        $user = $this->register->getPreregister($token);
+
         if (empty($user)) {
-            return redirect()->route('user.list');
+            $message = 'このURLは無効です。URLに間違いがないか、お確かめください。';
         }
-        return view('user.edit.index', ['user' => $user]);
+        return view('register.index', ['user' => $user, 'message' => $message]);
     }
 
     /**
      * 本登録確認
      *
-     * @param UserEditRequest $request
+     * @param RegisterRequest $request
      */
-    public function registerConfirm(UserEditRequest $request)
+    public function confirm(RegisterRequest $request)
     {
-        return view('user.edit.confirm', ['user' => $request]);
+        return view('register.confirm', ['user' => $request]);
     }
 
     /**
      * 本登録完了
      *
-     * @param UserEditRequest $request
+     * @param RegisterRequest $request
      */
-    public function registerComplete(UserEditRequest $request)
+    public function complete(RegisterRequest $request)
     {
         if ('submit' === $request->input('action')) {
-            $this->user->editUserData($request);
+            $this->register->editPreregister($request);
         } else {
-            return redirect()->route('user.edit.index', $request->input('id'))->withInput($request->input);
+            return redirect()->route('register.index', $request->input('email_verify_token'))->withInput($request->input);
         }
-        return view('user.edit.complete');
+        return view('register.complete');
     }
 }

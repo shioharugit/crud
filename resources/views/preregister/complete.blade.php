@@ -1,6 +1,6 @@
 @extends('layouts.index')
 
-@section('title', 'User')
+@section('title', 'Preregister-Complete')
 
 @section('content')
     <div class="page-header">
@@ -9,6 +9,10 @@
     <div class="card card-body mt-4">
         <p>仮登録が完了しました。</p>
         <p>メール内のリンクより本登録を進めて下さい。</p>
-        <p>メールが届かない場合、メールアドレスを間違えていないか迷惑メールフォルダに届いていないかご確認をお願いします。</p>
+        <p>メールが届かない場合、以下のご確認をお願いします。</p>
+        <ul>
+            <li>メールアドレスを間違えていないか</li>
+            <li>迷惑メールフォルダに届いていないか</li>
+        </ul>
     </div>
 @endsection

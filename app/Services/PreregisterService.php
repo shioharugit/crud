@@ -37,7 +37,10 @@ class PreregisterService
 
         DB::beginTransaction();
         try {
-            $this->user->createUsers($user);
+            // 仮登録データが存在しない場合のみ仮登録データを作成
+            if($this->user->where('email', $request->email)->where('status', config('const.USER_STATUS.PROVISIONAL_MEMBER'))->doesntExist()) {
+                $this->user->createUsers($user);
+            }
             $email = new EmailVerification($user);
             Mail::to([$user['email']])->send($email);
         } catch(\Exception $e) {

@@ -33,6 +33,6 @@ class EmailVerification extends Mailable
         return $this
             ->subject('【CRUD Sample】仮登録が完了しました')
             ->view('auth.email.preregister')
-            ->with(['token' => $email_verify_token]);
+            ->with(['token' => $this->user['email_verify_token']]);
     }
 }

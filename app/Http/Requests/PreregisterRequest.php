@@ -24,7 +24,8 @@ class PreregisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|max:255|unique:users,email',
+            'email' => 'required|email|max:255|unique:users,email,null,id,status,'.config('const.USER_STATUS.MEMBER'),
+            // uniqueは「ステータスが会員でemailが登録済みであるかどうか」のルールです
         ];
     }
 }
