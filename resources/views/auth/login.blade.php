@@ -39,6 +39,7 @@
                     <div class="col-md-8 col-md-offset-4">
                         <button type="submit" class="btn btn-primary">Login</button>
                         <a class="btn btn-link" href="{{ route('password.request') }}">パスワードを忘れた方はこちら</a>
+                        <a class="btn btn-link" href="{{ route('preregister.index') }}">新規登録はこちら</a>
                     </div>
                 </div>
             </form>

@@ -24,6 +24,7 @@ return [
     'unique' => 'この:attributeは既に登録されています',
     'in' => ':attributeが不正です',
     'required_with' => ':valuesを入力した場合:attributeは必須です',
+    'exists' => ':attributeが存在しません',
 
     /*
     |--------------------------------------------------------------------------

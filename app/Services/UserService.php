@@ -24,7 +24,10 @@ class UserService
      */
     public function getUsers($request)
     {
-        $query = $this->user->query()->where('authority', '>=', Auth::user()->authority);
+        // 自分より上権限を持つユーザーや仮会員は取得しない
+        $query = $this->user->query()
+            ->where('authority', '>=', Auth::user()->authority)
+            ->where('status', '!=', config('const.USER_STATUS.PROVISIONAL_MEMBER'));
 
         if(!empty($request->input('name'))) {
             $query->where('name', 'like', '%'.$request->input('name').'%');
@@ -74,7 +77,8 @@ class UserService
      */
     public function getDetailUser($id)
     {
-        return $this->user->getDetailUser($id, Auth::user()->authority);
+        $status = [config('const.USER_STATUS.MEMBER'), config('const.USER_STATUS.UNSUBSCRIBE')];
+        return $this->user->getDetailUser($id, Auth::user()->authority, $status);
     }
 
     /**

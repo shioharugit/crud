@@ -1,6 +1,6 @@
 @extends('layouts.index')
 
-@section('title', 'User')
+@section('title', 'User-Edit-Confirm')
 
 @section('content')
     <div class="page-header">

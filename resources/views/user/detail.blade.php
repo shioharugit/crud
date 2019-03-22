@@ -1,6 +1,6 @@
 @extends('layouts.index')
 
-@section('title', 'User')
+@section('title', 'User-Detail')
 
 @section('content')
     <div class="page-header">
@@ -32,8 +32,6 @@
             <dd class="col-md-9">
                 @if(config('const.USER_STATUS.MEMBER') == $user->status)
                     会員
-                @elseif(config('const.USER_STATUS.PROVISIONAL_MEMBER') == $user->status)
-                    仮会員
                 @elseif(config('const.USER_STATUS.UNSUBSCRIBE') == $user->status)
                     退会
                 @endif
