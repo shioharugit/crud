@@ -50,12 +50,10 @@
                     <td>{{$user->id}}</td>
                     <td><a href="{{route('user.detail', $user->id)}}">{{$user->name}}</a></td>
                     <td>
-                        @if (config('const.USER_STATUS.PROVISIONAL_MEMBER') == $user->status)
-                            {{ '仮会員' }}
-                        @elseif (config('const.USER_STATUS.UNSUBSCRIBE') == $user->status)
-                            {{ '退会' }}
-                        @else
+                        @if (config('const.USER_STATUS.MEMBER') == $user->status)
                             {{ '会員' }}
+                        @else
+                            {{ '退会' }}
                         @endif
                     </td>
                 </tr>
