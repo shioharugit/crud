@@ -46,7 +46,7 @@ class AuthServiceProvider extends ServiceProvider
             return ($user->authority >= config('const.USER_AUTHORITY.USER'));
         });
         // TEST以上（システム管理者&管理者&一般&TEST）に許可
-        Gate::define('user-higher', function ($user) {
+        Gate::define('test-higher', function ($user) {
             return ($user->authority <= config('const.USER_AUTHORITY.TEST'));
         });
     }
