@@ -47,8 +47,8 @@ class ResetPasswordController extends Controller
         return [
             'token' => 'required',
             'email' => 'required|email|max:255',
-            'password' => 'required|regex:/^[0-9a-zA-Z]+$/|between:8,16',
-            'password_confirmation' => 'required|regex:/^[0-9a-zA-Z]+$/|between:8,16|same:password',
+            'password' => 'required|regex:/\A[0-9a-zA-Z]+\z/|between:8,16',
+            'password_confirmation' => 'required|regex:/\A[0-9a-zA-Z]+\z/|between:8,16|same:password',
         ];
     }
 }

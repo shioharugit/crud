@@ -246,13 +246,13 @@ class CsvService
                     $rules[$val['INDEX']] = 'nullable|numeric|digits_between:0,10';
                     break;
                 case config('const.CSV_HEADER_NUM.NAME.INDEX'):
-                    $rules[$val['INDEX']] = 'required|regex:/^[a-zA-Z]+$/|max:255';
+                    $rules[$val['INDEX']] = 'required|regex:/\A[a-zA-Z]+\z/|max:255';
                     break;
                 case config('const.CSV_HEADER_NUM.EMAIL.INDEX'):
                     $rules[$val['INDEX']] = 'nullable|email|max:255';
                     break;
                 case config('const.CSV_HEADER_NUM.PASSWORD.INDEX'):
-                    $rules[$val['INDEX']] = 'nullable|regex:/^[0-9a-zA-Z]+$/|between:8,16';
+                    $rules[$val['INDEX']] = 'nullable|regex:/\A[0-9a-zA-Z]+\z/|between:8,16';
                     break;
                 case config('const.CSV_HEADER_NUM.AGE.INDEX'):
                     $rules[$val['INDEX']] = 'nullable|numeric|digits_between:0,2';
