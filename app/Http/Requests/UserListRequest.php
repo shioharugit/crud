@@ -24,7 +24,7 @@ class UserListRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|regex:/^[a-zA-Z]+$/|max:255',
+            'name' => 'nullable|regex:/\A[a-zA-Z]+\z/|max:255',
             'email' => 'nullable|max:255',
             'age' => 'nullable|numeric|digits_between:0,2',
         ];

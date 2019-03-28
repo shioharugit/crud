@@ -25,9 +25,9 @@ class RegisterRequest extends FormRequest
     {
         return [
             'email_verify_token' => 'required|exists:users,email_verify_token,status,'.config('const.USER_STATUS.PROVISIONAL_MEMBER'),
-            'name' => 'required|regex:/^[a-zA-Z]+$/|max:255',
-            'password' => 'required|regex:/^[0-9a-zA-Z]+$/|between:8,16',
-            'password_confirmation' => 'required|regex:/^[0-9a-zA-Z]+$/|between:8,16|same:password',
+            'name' => 'required|regex:/\A[a-zA-Z]+\z/|max:255',
+            'password' => 'required|regex:/\A[0-9a-zA-Z]+\z/|between:8,16',
+            'password_confirmation' => 'required|regex:/\A[0-9a-zA-Z]+\z/|between:8,16|same:password',
             'age' => 'nullable|numeric|digits_between:0,2',
         ];
     }

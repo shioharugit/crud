@@ -24,10 +24,10 @@ class UserRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|regex:/^[a-zA-Z]+$/|max:255',
+            'name' => 'required|regex:/\A[a-zA-Z]+\z/|max:255',
             'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|regex:/^[0-9a-zA-Z]+$/|between:8,16',
-            'password_confirmation' => 'required|regex:/^[0-9a-zA-Z]+$/|between:8,16|same:password',
+            'password' => 'required|regex:/\A[0-9a-zA-Z]+\z/|between:8,16',
+            'password_confirmation' => 'required|regex:/\A[0-9a-zA-Z]+\z/|between:8,16|same:password',
             'age' => 'nullable|numeric|digits_between:0,2',
             'authority' => 'required|in:'.config('const.USER_AUTHORITY.ADMIN').','.config('const.USER_AUTHORITY.USER'),
         ];

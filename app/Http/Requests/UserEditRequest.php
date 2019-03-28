@@ -26,10 +26,10 @@ class UserEditRequest extends FormRequest
     {
         return [
             'id' => 'nullable|numeric|digits_between:0,10',
-            'name' => 'required|regex:/^[a-zA-Z]+$/|max:255',
+            'name' => 'required|regex:/\A[a-zA-Z]+\z/|max:255',
             'email' => ['required','email','max:255',Rule::unique('users')->ignore($this->id)],
-            'password' => 'nullable|regex:/^[0-9a-zA-Z]+$/|between:8,16',
-            'password_confirmation' => 'required_with:password|nullable|regex:/^[0-9a-zA-Z]+$/|between:8,16|same:password',
+            'password' => 'nullable|regex:/\A[0-9a-zA-Z]+\z/|between:8,16',
+            'password_confirmation' => 'required_with:password|nullable|regex:/\A[0-9a-zA-Z]+\z/|between:8,16|same:password',
             'age' => 'nullable|numeric|digits_between:0,2',
             'authority' => 'required|in:'.config('const.USER_AUTHORITY.ADMIN').','.config('const.USER_AUTHORITY.USER'),
             'status' => 'required|in:'.config('const.USER_STATUS.MEMBER').','.config('const.USER_STATUS.UNSUBSCRIBE'),
