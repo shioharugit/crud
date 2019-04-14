@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <button type="submit" class="btn btn-primary btn-block disable-button">Login</button>
 
                 <div class="mt-3"><a class="btn btn-link" href="{{ route('password.request') }}">パスワードを忘れた方はこちら</a></div>
                 <div class="mt-3"><a class="btn btn-link" href="{{ route('preregister.index') }}">新規登録はこちら</a></div>

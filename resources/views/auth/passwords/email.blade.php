@@ -25,7 +25,7 @@
                             @endif
                         </dd>
                     </dl>
-                    <button type="submit" class="btn btn-primary btn-block">
+                    <button type="submit" class="btn btn-primary btn-block disable-button">
                         Send Password Reset Link
                     </button>
                 </form>
