@@ -10,7 +10,7 @@
         <p>ログアウトしますか？</p>
         <form action="{{ route('logout') }}" method="POST">
             {{ csrf_field() }}
-            <button type="submit" class="btn btn-primary btn-block">Logout</button>
+            <button type="submit" class="btn btn-primary btn-block disable-button">Logout</button>
         </form>
     </div>
 @endsection

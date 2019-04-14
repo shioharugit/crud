@@ -42,7 +42,7 @@
                     <input type="hidden" name="age" value="{{$user->age}}">
                 </dd>
             </dl>
-            <button type="submit" name="action" value="submit" class="btn btn-primary btn-block">Submit</button>
+            <button type="submit" name="action" value="submit" class="btn btn-primary btn-block disable-button">Submit</button>
             <button type="submit" name="action" value="back" class="btn btn-secondary btn-block mt-2">Back</button>
         </form>
     </div>

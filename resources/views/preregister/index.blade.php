@@ -18,7 +18,7 @@
                     @endif
                 </dd>
             </dl>
-            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            <button type="submit" class="btn btn-primary btn-block disable-button">Submit</button>
         </form>
     </div>
 @endsection
