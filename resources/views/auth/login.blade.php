@@ -72,7 +72,7 @@
             </table>
         </div>
         <div class="card-body">
-            権限は sytemadmin > admin > user > test のためsytemadminでログインすれば全ての機能を利用できます。
+            権限は systemadmin > admin > user > test のためsystemadminでログインすれば全ての機能を利用できます。
         </div>
     </div>
 @endsection
